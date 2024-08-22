@@ -38,9 +38,9 @@ export default class Vector {
   }
 
   projection(directionVector: Vector) {
-    const magnitude = this.dotProduct(directionVector) / (directionVector.getMagnitude() ** 2)
-
-    return directionVector.scaleTo(magnitude)
+    return directionVector.scaleBy(
+      this.dotProduct(directionVector) / (directionVector.getMagnitude() ** 2)
+    )
   }
 
   distance(otherVector: Vector) {
@@ -53,6 +53,10 @@ export default class Vector {
 
   unitDirection(otherVector: Vector) {
     const distance = this.distance(otherVector)
+
+    if (distance === 0) {
+      return new Vector(0, 0, 0)
+    }
 
     return new Vector(
       (otherVector.x - this.x) / distance,
@@ -74,6 +78,10 @@ export default class Vector {
   }
 
   scaleTo(magnitude: number) {
+    if (magnitude < 0) {
+      throw new Error('magnitude must be positive')
+    }
+
     const currentMagnitude = this.getMagnitude()
 
     if (currentMagnitude === 0) {
