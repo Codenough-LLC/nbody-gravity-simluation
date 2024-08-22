@@ -76,19 +76,6 @@ export default class Universe {
     })
   }
 
-  getBodyBoundaries = () => {
-    return this.bodies.reduce((agg, { position }) => {
-      if (position.x < agg.x[0]) agg.x[0] = position.x
-      if (position.x > agg.x[1]) agg.x[1] = position.x
-      if (position.y < agg.y[0]) agg.y[0] = position.y
-      if (position.y > agg.y[1]) agg.y[1] = position.y
-      if (position.z < agg.z[0]) agg.z[0] = position.z
-      if (position.z > agg.z[1]) agg.z[1] = position.z
-
-      return agg
-    }, { x: [Infinity, -Infinity], y: [Infinity, -Infinity], z: [Infinity, -Infinity] })
-  }
-
   getCenterOfMass = () => {
     const totalMass = this.bodies.reduce((agg, { mass }) => agg + mass, 0)
     return this.bodies.reduce((agg, { mass, position }) => {
