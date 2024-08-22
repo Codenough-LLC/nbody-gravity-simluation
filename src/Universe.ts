@@ -8,7 +8,7 @@ export default class Universe {
   deltaTime: number
   deltaTimeSegments: number
   simulationInterval: number
-  changeCallback: () => void
+  changeCallback: (() => void) | undefined
   private internalInterval: NodeJS.Timeout
 
   /**
@@ -36,7 +36,7 @@ export default class Universe {
     deltaTime?: number
     deltaTimeSegments?: number,
     simulationInterval?: number
-    changeCallback: () => void
+    changeCallback?: () => void
   }) {
     this.bodies = bodies
     this.gravity = gravity ?? 6.674e-11
@@ -62,7 +62,7 @@ export default class Universe {
     clearInterval(this.internalInterval)
     this.internalInterval = setInterval(() => {
       this.moveBodiesThroughTime()
-      this.changeCallback()
+      this.changeCallback?.()
     }, this.simulationInterval)
   }
 

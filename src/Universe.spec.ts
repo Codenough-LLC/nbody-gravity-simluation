@@ -19,22 +19,19 @@ describe('Universe', () => {
 
       expect(() => new Universe({
         bodies: [],
-        deltaTimeSegments: 1.1,
-        changeCallback: () => {}
+        deltaTimeSegments: 1.1
       })).toThrow('deltaTimeSegments must be a positive integer')
     })
 
     it('should throw error if simulationInterval is not positive', () => {
       expect(() => new Universe({
         bodies: [],
-        simulationInterval: 0,
-        changeCallback: () => {}
+        simulationInterval: 0
       })).toThrow('simulationInterval must be positive')
 
       expect(() => new Universe({
         bodies: [],
-        simulationInterval: -1,
-        changeCallback: () => {}
+        simulationInterval: -1
       })).toThrow('simulationInterval must be positive')
     })
   })
