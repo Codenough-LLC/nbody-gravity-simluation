@@ -7,14 +7,12 @@ describe('Universe', () => {
     it('should throw error if deltaTimeSegments is not a positive integer', () => {
       expect(() => new Universe({
         bodies: [],
-        deltaTimeSegments: 0,
-        changeCallback: () => {}
+        deltaTimeSegments: 0
       })).toThrow('deltaTimeSegments must be a positive integer')
 
       expect(() => new Universe({
         bodies: [],
-        deltaTimeSegments: -1,
-        changeCallback: () => {}
+        deltaTimeSegments: -1
       })).toThrow('deltaTimeSegments must be a positive integer')
 
       expect(() => new Universe({
