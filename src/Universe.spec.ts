@@ -9,7 +9,7 @@ describe('Universe', () => {
 
     const universe = new Universe({
       bodies: [],
-      renderInterval: 0,
+      simulationInterval: 0,
       changeCallback: () => { resolver() }
     })
 
@@ -37,7 +37,7 @@ describe('Universe', () => {
           velocity: new Vector(0, 0, 0)
         })
       ],
-      renderInterval: 0,
+      simulationInterval: 0,
       changeCallback: () => { resolver() }
     })
 

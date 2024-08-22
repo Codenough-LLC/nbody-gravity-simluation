@@ -7,10 +7,9 @@ export default class Universe {
   collisions: boolean
   deltaTime: number
   deltaTimeSegments: number
-  renderInterval: number
-
-  simulationInterval: NodeJS.Timeout
+  simulationInterval: number
   changeCallback: () => void
+  private internalInterval: NodeJS.Timeout
 
   constructor({
     /** orbital bodies in the simulation */
@@ -24,7 +23,7 @@ export default class Universe {
     /** number of segments in which to split the simlation time delta for more precise calculations */
     deltaTimeSegments,
     /** computer time between iterations */
-    renderInterval,
+    simulationInterval,
     /** callback fired when simulation state changes */
     changeCallback
   }: {
@@ -33,7 +32,7 @@ export default class Universe {
     collisions?: boolean
     deltaTime?: number
     deltaTimeSegments?: number,
-    renderInterval?: number
+    simulationInterval?: number
     changeCallback: () => void
   }) {
     this.bodies = bodies
@@ -41,7 +40,7 @@ export default class Universe {
     this.gravity = gravity ?? 6.674e-11
     this.collisions = collisions ?? false
     this.deltaTimeSegments = deltaTimeSegments ?? 1
-    this.renderInterval = renderInterval ?? 10
+    this.simulationInterval = simulationInterval ?? 10
     this.changeCallback = changeCallback
 
     this.start()
@@ -49,16 +48,16 @@ export default class Universe {
 
   /** start simulation */
   start() {
-    clearInterval(this.simulationInterval)
-    this.simulationInterval = setInterval(() => {
+    clearInterval(this.internalInterval)
+    this.internalInterval = setInterval(() => {
       this.moveBodiesThroughTime()
       this.changeCallback()
-    }, this.renderInterval)
+    }, this.simulationInterval)
   }
 
   /** stop simulation */
   stop() {
-    clearInterval(this.simulationInterval)
+    clearInterval(this.internalInterval)
   }
 
   calculateGravitationalForces = () => {
