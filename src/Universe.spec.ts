@@ -3,13 +3,49 @@ import Universe from './Universe'
 import Vector from './Vector'
 
 describe('Universe', () => {
+  describe('parameter validation', () => {
+    it('should throw error if deltaTimeSegments is not a positive integer', () => {
+      expect(() => new Universe({
+        bodies: [],
+        deltaTimeSegments: 0,
+        changeCallback: () => {}
+      })).toThrow('deltaTimeSegments must be a positive integer')
+
+      expect(() => new Universe({
+        bodies: [],
+        deltaTimeSegments: -1,
+        changeCallback: () => {}
+      })).toThrow('deltaTimeSegments must be a positive integer')
+
+      expect(() => new Universe({
+        bodies: [],
+        deltaTimeSegments: 1.1,
+        changeCallback: () => {}
+      })).toThrow('deltaTimeSegments must be a positive integer')
+    })
+
+    it('should throw error if simulationInterval is not positive', () => {
+      expect(() => new Universe({
+        bodies: [],
+        simulationInterval: 0,
+        changeCallback: () => {}
+      })).toThrow('simulationInterval must be positive')
+
+      expect(() => new Universe({
+        bodies: [],
+        simulationInterval: -1,
+        changeCallback: () => {}
+      })).toThrow('simulationInterval must be positive')
+    })
+  })
+
   it('should call changeCallback', async () => {
     let resolver: (value?: unknown) => void
     const promise = new Promise((resolve) => { resolver = resolve })
 
     const universe = new Universe({
       bodies: [],
-      simulationInterval: 0,
+      simulationInterval: 1,
       changeCallback: () => { resolver() }
     })
 
@@ -37,7 +73,7 @@ describe('Universe', () => {
           velocity: new Vector(0, 0, 0)
         })
       ],
-      simulationInterval: 0,
+      simulationInterval: 1,
       changeCallback: () => { resolver() }
     })
 

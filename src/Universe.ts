@@ -11,20 +11,23 @@ export default class Universe {
   changeCallback: () => void
   private internalInterval: NodeJS.Timeout
 
+  /**
+   * @param universe definition of the universe
+   * @param universe.bodies orbital bodies in the simulation
+   * @param universe.gravity gravitational strength
+   * @param universe.collisions should bodies collide? (elastically)
+   * @param universe.deltaTime simulation time elapsed between iterations
+   * @param universe.deltaTimeSegments number of segments in which to split the simlation time delta for more precise calculations
+   * @param universe.simulationInterval computer time between iterations
+   * @param universe.changeCallback callback fired when simulation state changes
+   */
   constructor({
-    /** orbital bodies in the simulation */
     bodies,
-    /** gravitational strength */
     gravity,
-    /** should bodies collide? (elastically) */
     collisions,
-    /** simulation time elapsed between iterations */
     deltaTime,
-    /** number of segments in which to split the simlation time delta for more precise calculations */
     deltaTimeSegments,
-    /** computer time between iterations */
     simulationInterval,
-    /** callback fired when simulation state changes */
     changeCallback
   }: {
     bodies: Body[]
@@ -36,12 +39,20 @@ export default class Universe {
     changeCallback: () => void
   }) {
     this.bodies = bodies
-    this.deltaTime = deltaTime ?? 0.5
     this.gravity = gravity ?? 6.674e-11
     this.collisions = collisions ?? false
+    this.deltaTime = deltaTime ?? 0.5
     this.deltaTimeSegments = deltaTimeSegments ?? 1
     this.simulationInterval = simulationInterval ?? 10
     this.changeCallback = changeCallback
+
+    if (this.deltaTimeSegments % 1 || this.deltaTimeSegments < 1) {
+      throw new Error('deltaTimeSegments must be a positive integer')
+    }
+
+    if (this.simulationInterval <= 0) {
+      throw new Error('simulationInterval must be positive')
+    }
 
     this.start()
   }
@@ -60,7 +71,7 @@ export default class Universe {
     clearInterval(this.internalInterval)
   }
 
-  calculateGravitationalForces = () => {
+  private calculateGravitationalForces = () => {
     const bodyForces: Vector[][] = Array.from({ length: this.bodies.length }, () => [])
     this.bodies.forEach((body1, index1) => {
       this.bodies.slice(index1 + 1).forEach((body2, index2) => {
@@ -77,7 +88,7 @@ export default class Universe {
     })
   }
 
-  bounceCollisions = (body1: Body, index1: number) => {
+  private bounceCollisions = (body1: Body, index1: number) => {
     this.bodies.forEach((body2, index2) => {
       if (index1 !== index2) {
         const distanceBetweenBodies = body2.position.distance(body1.position)
@@ -104,7 +115,7 @@ export default class Universe {
     })
   }
 
-  moveBodiesThroughTime = () => {
+  private moveBodiesThroughTime = () => {
     this.calculateGravitationalForces()
     this.bodies.forEach((body, index) => {
       const deltaTimePerSegment = this.deltaTime / this.deltaTimeSegments

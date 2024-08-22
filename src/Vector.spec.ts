@@ -84,7 +84,7 @@ describe('Vector', () => {
     it('should scale vector to factor', () => {
       expect(new Vector(1, 2, 3).scaleTo(3))
         .toEqual(new Vector(expect.closeTo(0.8), expect.closeTo(1.6), expect.closeTo(2.41)))
-      expect(() => new Vector(1, -2, 3).scaleTo(-1)).toThrow(new Error('magnitude must be positive'))
+      expect(() => new Vector(1, -2, 3).scaleTo(-1)).toThrow('magnitude must be positive')
     })
   })
 })
