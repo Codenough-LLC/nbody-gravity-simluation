@@ -1,0 +1,56 @@
+{
+  "name": "nbody-gravity-simulation",
+  "version": "0.0.0",
+  "description": "Simulation of gravitational interactions of n bodies",
+  "author": "David Lounsbrough",
+  "license": "MIT",
+  "repository": "Codenough-LLC/nbody-gravity-simluation",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "rollup -c",
+    "build-watch": "rollup -c --watch",
+    "publish-npm": "pnpm clean && pnpm build && npm publish",
+    "build-demo": "pnpm --prefix demo build",
+    "deploy-demo": "pnpm build-demo && gh-pages -d demo/build",
+    "lint": "eslint",
+    "test": "???"
+  },
+  "keywords": [
+    "body",
+    "bodies",
+    "3-body",
+    "n-body",
+    "gravity",
+    "gravitational",
+    "orbit",
+    "orbital",
+    "simulation",
+    "physics",
+    "npm",
+    "package",
+    "typescript"
+  ],
+  "files": [
+    "/lib"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.5.0",
+    "eslint": "^9.9.0",
+    "gh-pages": "^6.1.1",
+    "rollup": "^4.21.0",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.2.0",
+    "webpack": "^5.94.0"
+  }
+}
