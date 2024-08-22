@@ -17,7 +17,6 @@ export default {
       sourcemap: true
     }
   ],
-  external: ['node:events'],
   plugins: [
     typescript()
   ]

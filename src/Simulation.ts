@@ -1,4 +1,3 @@
-import EventEmitter from 'node:events'
 import Universe from './Universe'
 import Body from './Body'
 
@@ -10,8 +9,8 @@ export default class Simulation {
   renderInterval: number
 
   universe: Universe
-  eventEmitter: EventEmitter
   simulationInterval: NodeJS.Timeout
+  changeCallback: () => void
 
   constructor({
     /** orbital bodies in the simulation */
@@ -23,19 +22,23 @@ export default class Simulation {
     /** simulation time elapsed between iterations */
     deltaTime,
     /** computer time between iterations */
-    renderInterval
+    renderInterval,
+    /** callback fired when simulation state changes */
+    changeCallback
   }: {
     bodies: Body[]
     gravity?: number
     collisions?: boolean
     deltaTime?: number
     renderInterval?: number
+    changeCallback: () => void
   }) {
     this.bodies = bodies
     this.gravity = gravity ?? 6.674e-11
     this.collisions = collisions ?? false
     this.deltaTime = deltaTime ?? 0.5
     this.renderInterval = renderInterval ?? 10
+    this.changeCallback = changeCallback
 
     this.universe = new Universe({
       bodies: this.bodies,
@@ -44,10 +47,20 @@ export default class Simulation {
       deltaTime: this.deltaTime
     })
 
-    this.eventEmitter = new EventEmitter()
+    this.start()
+  }
+
+  /** start simulation */
+  start() {
+    clearInterval(this.simulationInterval)
     this.simulationInterval = setInterval(() => {
       this.universe.moveBodiesThroughTime()
-      this.eventEmitter.emit('deltaTime')
-    }, renderInterval)
+      this.changeCallback()
+    }, this.renderInterval)
+  }
+
+  /** stop simulation */
+  stop() {
+    clearInterval(this.simulationInterval)
   }
 }

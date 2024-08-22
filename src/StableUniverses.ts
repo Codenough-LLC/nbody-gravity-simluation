@@ -84,19 +84,19 @@ export const FigureEight = new Universe({
       mass: 1,
       position: new Vector(0.97000436, -0.24308753, 0),
       velocity: new Vector(0.466203685, 0.43236573, 0),
-      color: "#3d9900"
+      color: '#3d9900'
     }),
     new Body({
       mass: 1,
       position: new Vector(-0.97000436, 0.24308753, 0),
       velocity: new Vector(0.466203685, 0.43236573, 0),
-      color: "#00314e"
+      color: '#00314e'
     }),
     new Body({
       mass: 1,
       position: new Vector(0, 0, 0),
       velocity: new Vector(-0.93240737, -0.86473146, 0),
-      color: "#008ebd"
+      color: '#008ebd'
     })
   ],
   gravity: 1, collisions: false, deltaTime: 0.005

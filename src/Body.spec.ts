@@ -1,5 +1,5 @@
-import Body from "./Body"
-import Vector from "./Vector"
+import Body from './Body'
+import Vector from './Vector'
 
 describe('Body', () => {
   describe('setExternalForces', () => {

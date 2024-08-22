@@ -18,7 +18,8 @@ export default tseslint.config(
   },
   {
     rules: {
-      'semi': ['error', 'never']
+      semi: ['error', 'never'],
+      quotes: ['error', 'single']
     }
   }
 )
