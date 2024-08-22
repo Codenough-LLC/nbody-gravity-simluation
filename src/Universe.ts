@@ -6,22 +6,59 @@ export default class Universe {
   gravity: number
   collisions: boolean
   deltaTime: number
+  deltaTimeSegments: number
+  renderInterval: number
+
+  simulationInterval: NodeJS.Timeout
+  changeCallback: () => void
 
   constructor({
+    /** orbital bodies in the simulation */
     bodies,
+    /** gravitational strength */
     gravity,
+    /** should bodies collide? (elastically) */
     collisions,
-    deltaTime
+    /** simulation time elapsed between iterations */
+    deltaTime,
+    /** number of segments in which to split the simlation time delta for more precise calculations */
+    deltaTimeSegments,
+    /** computer time between iterations */
+    renderInterval,
+    /** callback fired when simulation state changes */
+    changeCallback
   }: {
     bodies: Body[]
     gravity?: number
     collisions?: boolean
     deltaTime?: number
+    deltaTimeSegments?: number,
+    renderInterval?: number
+    changeCallback: () => void
   }) {
     this.bodies = bodies
     this.deltaTime = deltaTime ?? 0.5
     this.gravity = gravity ?? 6.674e-11
     this.collisions = collisions ?? false
+    this.deltaTimeSegments = deltaTimeSegments ?? 1
+    this.renderInterval = renderInterval ?? 10
+    this.changeCallback = changeCallback
+
+    this.start()
+  }
+
+  /** start simulation */
+  start() {
+    clearInterval(this.simulationInterval)
+    this.simulationInterval = setInterval(() => {
+      this.moveBodiesThroughTime()
+      this.changeCallback()
+    }, this.renderInterval)
+  }
+
+  /** stop simulation */
+  stop() {
+    clearInterval(this.simulationInterval)
   }
 
   calculateGravitationalForces = () => {
@@ -71,8 +108,12 @@ export default class Universe {
   moveBodiesThroughTime = () => {
     this.calculateGravitationalForces()
     this.bodies.forEach((body, index) => {
-      body.moveBodyThroughTime(this.deltaTime)
-      if (this.collisions) this.bounceCollisions(body, index)
+      const deltaTimePerSegment = this.deltaTime / this.deltaTimeSegments
+
+      for (let i = 0; i < this.deltaTimeSegments; i++) {
+        body.moveBodyThroughTime(deltaTimePerSegment)
+        if (this.collisions) this.bounceCollisions(body, index)
+      }
     })
   }
 

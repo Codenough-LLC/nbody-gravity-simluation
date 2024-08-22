@@ -1,23 +1,23 @@
 import Body from './Body'
-import Simulation from './Simulation'
+import Universe from './Universe'
 import Vector from './Vector'
 
-describe('Simulation', () => {
+describe('Universe', () => {
   it('should call changeCallback', async () => {
     let resolver: (value?: unknown) => void
     const promise = new Promise((resolve) => { resolver = resolve })
 
-    const simulation = new Simulation({
+    const universe = new Universe({
       bodies: [],
       renderInterval: 0,
       changeCallback: () => { resolver() }
     })
 
     await promise
-    simulation.stop()
+    universe.stop()
   })
 
-  it('should move bodies through universe', async () => {
+  it('should move bodies through delta time', async () => {
     let resolver: (value?: unknown) => void
     const promise = new Promise((resolve) => { resolver = resolve })
 
@@ -26,7 +26,7 @@ describe('Simulation', () => {
       new Vector(-1, -1, -1)
     ]
 
-    const simulation = new Simulation({
+    const universe = new Universe({
       bodies: [
         new Body({
           position: startingPositions[0],
@@ -41,12 +41,10 @@ describe('Simulation', () => {
       changeCallback: () => { resolver() }
     })
 
-    expect(simulation.bodies).toBe(simulation.universe.bodies)
-
     await promise
-    simulation.stop()
+    universe.stop()
 
-    expect(simulation.bodies[0].position).not.toEqual(startingPositions[0])
-    expect(simulation.bodies[1].position).not.toEqual(startingPositions[1])
+    expect(universe.bodies[0].position).not.toEqual(startingPositions[0])
+    expect(universe.bodies[1].position).not.toEqual(startingPositions[1])
   })
 })
