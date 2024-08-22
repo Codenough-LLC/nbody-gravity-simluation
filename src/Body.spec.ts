@@ -9,9 +9,9 @@ describe('Body', () => {
         velocity: new Vector(1, 2, -3)
       })
 
-      body.moveBodyThroughTime(1)
+      body.moveBodyThroughTime(2)
 
-      expect(body.velocity).toEqual(new Vector(1, 2, -3))
+      expect(body.position).toEqual(new Vector(2, 4, -6))
     })
   })
 })
