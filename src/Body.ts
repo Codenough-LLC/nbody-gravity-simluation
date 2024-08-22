@@ -3,23 +3,21 @@ import Vector from './Vector'
 export default class Body {
   mass: number
   radius: number
-  tailLength: number
-  color: string
   position: Vector
   velocity: Vector
   acceleration: Vector = new Vector(0, 0, 0)
   externalForces: Vector[] = []
   netExternalForce: Vector = new Vector(0, 0, 0)
+  pastPositionsLength: number
   pastPositions: Vector[] = []
   maxVelocity: number | undefined
 
-  constructor({ mass, radius, position, velocity, color, tailLength, maxVelocity }: {
+  constructor({ mass, radius, position, velocity, pastPositionsLength, maxVelocity }: {
     mass?: number
     radius?: number
     position: Vector
     velocity: Vector
-    color?: string
-    tailLength?: number
+    pastPositionsLength?: number
     maxVelocity?: number
   }) {
     if (mass === 0) {
@@ -28,9 +26,8 @@ export default class Body {
 
     this.mass = mass ?? 1000000
     this.radius = radius ?? 0.04
-    this.tailLength = tailLength ?? 200
-    this.color = color ?? '#000'
     this.position = position
+    this.pastPositionsLength = pastPositionsLength ?? 200
     this.pastPositions.push(position)
     this.velocity = velocity
     this.maxVelocity = maxVelocity
@@ -58,7 +55,7 @@ export default class Body {
     }
     const deltaPosition = this.velocity.scaleBy(deltaTime)
     this.position = this.position.sum(deltaPosition)
-    if (this.pastPositions.length >= this.tailLength) {
+    if (this.pastPositions.length >= this.pastPositionsLength) {
       this.pastPositions.pop()
     }
     this.pastPositions.unshift(this.position)
