@@ -1,8 +1,8 @@
 import Body from './Body'
-import Universe from './Universe';
-import Vector from './Vector';
+import Universe from './Universe'
+import Vector from './Vector'
 
-const equalChaseCircularSpeed = 0.008125;
+const equalChaseCircularSpeed = 0.008125
 export const EqualChaseCircular = new Universe({
   bodies: [
     new Body({
@@ -24,9 +24,9 @@ export const EqualChaseCircular = new Universe({
       color: '#008ebd'
     })
   ]
-});
+})
 
-const equalChaseInOutSpeed = 0.006;
+const equalChaseInOutSpeed = 0.006
 export const EqualChaseInOut = new Universe({
   bodies: [
     new Body({
@@ -48,10 +48,10 @@ export const EqualChaseInOut = new Universe({
       color: '#008ebd'
     })
   ]
-});
+})
 
-const getRandom = () => -1 + Math.random() * 2;
-const maxVelocityForRandom = 0.02;
+const getRandom = () => -1 + Math.random() * 2
+const maxVelocityForRandom = 0.02
 export const Random = new Universe({
   bodies: [
     new Body({
@@ -76,7 +76,7 @@ export const Random = new Universe({
       color: '#777'
     })
   ]
-});
+})
 
 export const FigureEight = new Universe({
   bodies: [
@@ -100,4 +100,4 @@ export const FigureEight = new Universe({
     })
   ],
   gravity: 1, collisions: false, deltaTime: 0.005
-});
+})

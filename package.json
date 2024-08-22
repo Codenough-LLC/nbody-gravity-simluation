@@ -19,7 +19,7 @@
     "build-demo": "pnpm --prefix demo build",
     "deploy-demo": "pnpm build-demo && gh-pages -d demo/build",
     "lint": "eslint",
-    "test": "jest --passWithNoTests"
+    "test": "jest"
   },
   "keywords": [
     "body",
@@ -43,11 +43,14 @@
     "@eslint/js": "^9.9.0",
     "@rollup/plugin-typescript": "^11.1.6",
     "@types/eslint__js": "^8.42.3",
+    "@types/jest": "^29.5.12",
     "@types/node": "^22.5.0",
     "eslint": "^9.9.0",
+    "eslint-plugin-jest": "^28.8.0",
     "gh-pages": "^6.1.1",
     "jest": "^29.7.0",
     "rollup": "^4.21.0",
+    "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.3",
     "typescript": "^5.5.4",

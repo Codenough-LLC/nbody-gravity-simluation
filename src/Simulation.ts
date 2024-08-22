@@ -10,7 +10,7 @@ export default class Simulation {
   renderInterval: number
 
   universe: Universe
-  eventEmitter: EventEmitter;
+  eventEmitter: EventEmitter
   simulationInterval: NodeJS.Timeout
 
   constructor({
@@ -31,7 +31,7 @@ export default class Simulation {
     deltaTime?: number
     renderInterval?: number
   }) {
-    this.bodies = bodies;
+    this.bodies = bodies
     this.gravity = gravity ?? 6.674e-11
     this.collisions = collisions ?? false
     this.deltaTime = deltaTime ?? 0.5
@@ -48,6 +48,6 @@ export default class Simulation {
     this.simulationInterval = setInterval(() => {
       this.universe.moveBodiesThroughTime()
       this.eventEmitter.emit('deltaTime')
-    }, renderInterval);
+    }, renderInterval)
   }
 }

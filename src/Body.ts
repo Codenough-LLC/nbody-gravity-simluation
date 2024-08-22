@@ -1,4 +1,4 @@
-import Vector from './Vector';
+import Vector from './Vector'
 
 export default class Body {
   mass: number
@@ -37,7 +37,7 @@ export default class Body {
   }
 
   setExternalForces(externalForces: Vector[]) {
-    this.externalForces = externalForces;
+    this.externalForces = externalForces
 
     this.netExternalForce = this.externalForces.reduce((total, force) => {
       total.x += force.x
@@ -59,7 +59,7 @@ export default class Body {
     const deltaPosition = this.velocity.scaleBy(deltaTime)
     this.position = this.position.sum(deltaPosition)
     if (this.pastPositions.length >= this.tailLength) {
-      this.pastPositions.pop();
+      this.pastPositions.pop()
     }
     this.pastPositions.unshift(this.position)
   }

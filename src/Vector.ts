@@ -70,7 +70,7 @@ export default class Vector {
       this.x * factor,
       this.y * factor,
       this.z * factor
-    );
+    )
   }
 
   scaleTo(magnitude: number) {
